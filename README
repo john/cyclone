@@ -1,1 +1,3 @@
-A little app to test Python and Tornado. Provides a live stream of recent uploads to Flickr. First time I've tried Python, so please forgive any fugliness :-)
+A little app to test Python and Tornado, for the first time each (so far: I like 'em).
+
+You can see it running (behind nginx), at http://testeroni.com/cyclone
