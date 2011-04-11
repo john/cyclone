@@ -11,7 +11,8 @@ import tornado.httpclient
 
 from tornado.options import define, options
 
-define("port", default=8888, help="run on the given port", type=int)
+define("port", default=5000, help="run on the given port", type=int)
+define("api_key", default='', help="flickr api key")
 
 
 class Application(tornado.web.Application):
@@ -47,7 +48,7 @@ class UpdatesHandler(tornado.web.RequestHandler):
         # url = 'http://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&api_key='+api_key+'&text=cat&per_page=2'        
         
         # for getting most recent
-        api_key = sys.argv[1]
+        api_key = options.api_key
         url = 'http://api.flickr.com/services/rest/?method=flickr.photos.getRecent&format=json&nojsoncallback=1&api_key='+api_key+'&per_page=1'
         
         # try with NYT headlines?
@@ -72,7 +73,7 @@ def main():
     app.listen(options.port)
     
     # daemonize
-    log = open('tornado.' + str(port) + '.log', 'a+')
+    log = open('tornado.' + str(options.port) + '.log', 'a+')
     ctx = daemon.DaemonContext(stdout=log, stderr=log,  working_directory='.')
     ctx.open()
     
