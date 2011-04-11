@@ -1,4 +1,3 @@
-import daemon
 import sys
 import os.path
 import time
@@ -18,8 +17,8 @@ define("api_key", default='', help="flickr api key")
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
-            (r"/", MainHandler),
-            (r"/updates", UpdatesHandler),
+            (r"/cyclone", MainHandler),
+            (r"/cyclone/updates", UpdatesHandler),
         ]
         settings = dict(
             static_path="static",
@@ -71,12 +70,6 @@ def main():
     tornado.options.parse_command_line()
     app = Application()
     app.listen(options.port)
-    
-    # daemonize
-    log = open('tornado.' + str(options.port) + '.log', 'a+')
-    ctx = daemon.DaemonContext(stdout=log, stderr=log,  working_directory='.')
-    ctx.open()
-    
     tornado.ioloop.IOLoop.instance().start()
 
 
