@@ -70,6 +70,12 @@ def main():
     tornado.options.parse_command_line()
     app = Application()
     app.listen(options.port)
+    
+    # daemonize
+    log = open('tornado.' + str(port) + '.log', 'a+')
+    ctx = daemon.DaemonContext(stdout=log, stderr=log,  working_directory='.')
+    ctx.open()
+    
     tornado.ioloop.IOLoop.instance().start()
 
 
